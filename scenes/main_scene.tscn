@@ -1,26 +1,71 @@
-[gd_scene load_steps=3 format=3 uid="uid://by8yr37dukijn"]
+[gd_scene load_steps=10 format=3 uid="uid://by8yr37dukijn"]
 
 [ext_resource type="PackedScene" uid="uid://pxewf21bvkj5" path="res://scenes/platform.tscn" id="1_0rvub"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_s6hcl"]
 [ext_resource type="PackedScene" uid="uid://vidjmv1dbp7n" path="res://scenes/player.tscn" id="2_0jfnv"]
+[ext_resource type="Script" path="res://scripts/platform_spawner.gd" id="2_2f145"]
+[ext_resource type="Script" path="res://scripts/camera_mover.gd" id="3_doiey"]
+[ext_resource type="Texture2D" uid="uid://dbhduny7spq6t" path="res://icon.svg" id="5_tyqsi"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oshrf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d0mal"]
+font_size = 126
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u38k2"]
+size = Vector2(1108, 150)
 
 [node name="MainScene" type="Node2D"]
+script = ExtResource("1_s6hcl")
+metadata/_edit_vertical_guides_ = [0.0, 1080.0, 540.0]
+metadata/_edit_horizontal_guides_ = [0.0, 1920.0, 960.0]
 
-[node name="Player" parent="." instance=ExtResource("2_0jfnv")]
-position = Vector2(504, 1138)
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_0jfnv")]
+position = Vector2(540, 1474)
+SPEED = 450.0
+JUMP_VELOCITY = 1500.0
+
+[node name="PlatformsMarker" type="Marker2D" parent="Player"]
+position = Vector2(0, -675)
 
 [node name="PlatformSpawner" type="Node2D" parent="."]
+script = ExtResource("2_2f145")
+platform_scene = ExtResource("1_0rvub")
 
 [node name="Platform" parent="PlatformSpawner" instance=ExtResource("1_0rvub")]
-position = Vector2(513, 1701)
+position = Vector2(540, 1793)
 
-[node name="Platform2" parent="PlatformSpawner" instance=ExtResource("1_0rvub")]
-position = Vector2(872, 1399)
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("3_doiey")
 
-[node name="Platform3" parent="PlatformSpawner" instance=ExtResource("1_0rvub")]
-position = Vector2(336, 1222)
+[node name="PlatformDestroyer" type="Area2D" parent="Camera"]
+position = Vector2(540, 2040)
 
-[node name="Platform4" parent="PlatformSpawner" instance=ExtResource("1_0rvub")]
-position = Vector2(770, 1029)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/PlatformDestroyer"]
+shape = SubResource("WorldBoundaryShape2D_oshrf")
 
-[node name="Platform5" parent="PlatformSpawner" instance=ExtResource("1_0rvub")]
-position = Vector2(294, 818)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_d0mal")
+horizontal_alignment = 1
+
+[node name="LosingGround" type="StaticBody2D" parent="."]
+position = Vector2(540, 2500)
+
+[node name="Sprite2D" type="Sprite2D" parent="LosingGround"]
+scale = Vector2(8.17188, 1.15625)
+texture = ExtResource("5_tyqsi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LosingGround"]
+shape = SubResource("RectangleShape2D_u38k2")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]

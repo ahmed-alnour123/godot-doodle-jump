@@ -11,7 +11,13 @@ height = 126.0
 script = ExtResource("1_oljum")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.160376, 0.663385, 1)
 texture = ExtResource("1_1ghof")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ol4oo")
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(5.3, 5.3)
+
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_visibility_notifier_screen_exited"]

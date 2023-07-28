@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://jaifk4eyje3v"]
+
+[ext_resource type="Texture2D" uid="uid://dbhduny7spq6t" path="res://icon.svg" id="1_crsai"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iomem"]
+size = Vector2(36, 36)
+
+[node name="Spring" type="Area2D"]
+modulate = Color(1, 1, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_crsai")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_iomem")
