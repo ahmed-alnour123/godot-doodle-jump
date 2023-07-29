@@ -1,23 +1,69 @@
-[gd_scene load_steps=4 format=3 uid="uid://vidjmv1dbp7n"]
+[gd_scene load_steps=11 format=3 uid="uid://vidjmv1dbp7n"]
 
-[ext_resource type="Texture2D" uid="uid://dbhduny7spq6t" path="res://icon.svg" id="1_1ghof"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_oljum"]
+[ext_resource type="Texture2D" uid="uid://rnefdbnonobc" path="res://art/character/p1_jump.png" id="2_yr3wo"]
+[ext_resource type="Texture2D" uid="uid://dx4nfjslgqhsk" path="res://art/character/p1_duck.png" id="3_8mmvo"]
+[ext_resource type="Texture2D" uid="uid://dpdar8h813p16" path="res://art/character/p1_front.png" id="3_gpnqr"]
+[ext_resource type="Texture2D" uid="uid://coubk02bvso0s" path="res://art/character/p1_hurt.png" id="3_qffrc"]
+[ext_resource type="AudioStream" uid="uid://do6hslp4tpjyj" path="res://sounds/jump_sound.wav" id="6_qbgq7"]
+[ext_resource type="AudioStream" uid="uid://jvpiif2p8q1y" path="res://sounds/fall_sound.mp3" id="7_atcyg"]
+[ext_resource type="AudioStream" uid="uid://bq8vmgwbybtri" path="res://sounds/spring_sound.mp3" id="8_l8pkv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ol4oo"]
-radius = 62.0
-height = 126.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6b4mw"]
+size = Vector2(90, 198)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pk00p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_gpnqr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qffrc")
+}],
+"loop": true,
+"name": &"die",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8mmvo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yr3wo")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 7.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 script = ExtResource("1_oljum")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0.160376, 0.663385, 1)
-texture = ExtResource("1_1ghof")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_ol4oo")
+shape = SubResource("RectangleShape2D_6b4mw")
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(5.3, 5.3)
+scale = Vector2(7.2, 9.9)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2.1194, 2.1194)
+sprite_frames = SubResource("SpriteFrames_pk00p")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_qbgq7")
+
+[node name="FallSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_atcyg")
+volume_db = 10.0
+
+[node name="SpringSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_l8pkv")
 
 [connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_visibility_notifier_screen_exited"]

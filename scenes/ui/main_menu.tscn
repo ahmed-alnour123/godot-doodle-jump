@@ -1,0 +1,113 @@
+[gd_scene load_steps=9 format=3 uid="uid://2v8y5twhn5ip"]
+
+[ext_resource type="Texture2D" uid="uid://tbdtp8e854ew" path="res://art/icons/icons/info_icon.svg" id="1_hlwjo"]
+[ext_resource type="FontFile" uid="uid://dqqtdqekg8ovv" path="res://art/fonts/PatrickHand-Regular.ttf" id="1_yqu2d"]
+[ext_resource type="Texture2D" uid="uid://cqy7ta3w4cjug" path="res://art/icons/icons/play_icon.svg" id="2_7fxr8"]
+[ext_resource type="Texture2D" uid="uid://cbrrhtt2m1qxp" path="res://art/ui_pack/PNG/grey_button07.png" id="2_o287y"]
+[ext_resource type="Texture2D" uid="uid://c8mbnweopqrqf" path="res://art/ui_pack/PNG/grey_button08.png" id="3_j1uwd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mp7tv"]
+font = ExtResource("1_yqu2d")
+font_size = 201
+outline_size = 30
+outline_color = Color(1, 0.8, 0, 1)
+shadow_size = 90
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(9, 6)
+
+[sub_resource type="InputEventKey" id="InputEventKey_uuj2o"]
+device = -1
+keycode = 32
+unicode = 32
+
+[sub_resource type="Shortcut" id="Shortcut_170pe"]
+events = [SubResource("InputEventKey_uuj2o")]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -436.0
+offset_top = -630.0
+offset_right = 436.0
+offset_bottom = -273.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Space Jump"
+label_settings = SubResource("LabelSettings_mp7tv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="About" type="TextureButton" parent="."]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 179.0
+offset_bottom = 179.0
+texture_normal = ExtResource("2_o287y")
+texture_pressed = ExtResource("3_j1uwd")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="About"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.5
+offset_top = -58.5
+offset_right = 50.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hlwjo")
+
+[node name="Play" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.0
+offset_top = 263.0
+offset_right = 131.0
+offset_bottom = 507.0
+grow_horizontal = 2
+grow_vertical = 2
+shortcut = SubResource("Shortcut_170pe")
+shortcut_in_tooltip = false
+texture_normal = ExtResource("2_o287y")
+texture_pressed = ExtResource("3_j1uwd")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="Play"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -74.0
+offset_right = 64.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_7fxr8")

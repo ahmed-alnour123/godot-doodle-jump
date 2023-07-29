@@ -1,18 +1,17 @@
-[gd_scene load_steps=18 format=3 uid="uid://by8yr37dukijn"]
+[gd_scene load_steps=17 format=3 uid="uid://cbadme21trs6v"]
 
-[ext_resource type="PackedScene" uid="uid://pxewf21bvkj5" path="res://scenes/platform.tscn" id="1_0rvub"]
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_s6hcl"]
-[ext_resource type="PackedScene" uid="uid://vidjmv1dbp7n" path="res://scenes/player.tscn" id="2_0jfnv"]
-[ext_resource type="Script" path="res://scripts/platform_spawner.gd" id="2_2f145"]
-[ext_resource type="Script" path="res://scripts/camera_mover.gd" id="3_doiey"]
-[ext_resource type="Texture2D" uid="uid://cyvvr8nl0jebr" path="res://art/moon_tile.png" id="5_gq3h4"]
-[ext_resource type="Texture2D" uid="uid://dcier2dyqnwa1" path="res://art/starfield.png" id="7_b3v0r"]
-[ext_resource type="PackedScene" uid="uid://2v8y5twhn5ip" path="res://scenes/ui/main_menu.tscn" id="7_ufq5w"]
-[ext_resource type="PackedScene" uid="uid://b0qg7gayb5phf" path="res://scenes/ui/about_developer.tscn" id="8_1ebt3"]
-[ext_resource type="AudioStream" uid="uid://d25dv2ud0oh7l" path="res://sounds/select_ui.ogg" id="8_4c38d"]
-[ext_resource type="FontFile" uid="uid://dqqtdqekg8ovv" path="res://art/fonts/PatrickHand-Regular.ttf" id="8_gp7tg"]
-[ext_resource type="PackedScene" uid="uid://cbqygid0e58sr" path="res://scenes/ui/lose_panel.tscn" id="8_p2oiy"]
-[ext_resource type="AudioStream" uid="uid://bq8vmgwbybtri" path="res://sounds/spring_sound.mp3" id="9_t2077"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_3fqsb"]
+[ext_resource type="PackedScene" uid="uid://vidjmv1dbp7n" path="res://scenes/player.tscn" id="2_rt4ki"]
+[ext_resource type="PackedScene" uid="uid://pxewf21bvkj5" path="res://scenes/platform.tscn" id="4_j7kpx"]
+[ext_resource type="Texture2D" uid="uid://cyvvr8nl0jebr" path="res://art/moon_tile.png" id="5_a52te"]
+[ext_resource type="Script" path="res://scripts/camera_mover.gd" id="6_4pr4e"]
+[ext_resource type="Texture2D" uid="uid://dcier2dyqnwa1" path="res://art/starfield.png" id="7_cy8kx"]
+[ext_resource type="AudioStream" uid="uid://d25dv2ud0oh7l" path="res://sounds/select_ui.ogg" id="8_hcrq3"]
+[ext_resource type="AudioStream" uid="uid://bq8vmgwbybtri" path="res://sounds/spring_sound.mp3" id="9_54404"]
+[ext_resource type="FontFile" uid="uid://dqqtdqekg8ovv" path="res://art/fonts/PatrickHand-Regular.ttf" id="10_iguut"]
+[ext_resource type="PackedScene" uid="uid://2v8y5twhn5ip" path="res://scenes/ui/main_menu.tscn" id="11_eit8c"]
+[ext_resource type="PackedScene" uid="uid://b0qg7gayb5phf" path="res://scenes/ui/about_developer.tscn" id="12_dyu01"]
+[ext_resource type="PackedScene" uid="uid://cbqygid0e58sr" path="res://scenes/ui/lose_panel.tscn" id="13_kqj0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3mbr6"]
 size = Vector2(522, 122)
@@ -23,33 +22,36 @@ size = Vector2(522, 122)
 size = Vector2(1250, 294)
 
 [sub_resource type="LabelSettings" id="LabelSettings_d0mal"]
-font = ExtResource("8_gp7tg")
+font = ExtResource("10_iguut")
 font_size = 126
 
 [node name="MainScene" type="Node2D"]
-script = ExtResource("1_s6hcl")
+script = ExtResource("1_3fqsb")
 metadata/_edit_vertical_guides_ = [0.0, 1080.0, 540.0]
 metadata/_edit_horizontal_guides_ = [0.0, 1920.0, 960.0]
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("2_0jfnv")]
-position = Vector2(524, 1646)
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_rt4ki")]
+position = Vector2(623, 1239)
 SPEED = 1500.0
 JUMP_VELOCITY = 2000.0
+
+[node name="Sprite" parent="Player" index="2"]
+scale = Vector2(-2.119, 2.119)
+animation = &"jump"
+frame = 1
+frame_progress = 1.0
 
 [node name="PlatformsMarker" type="Marker2D" parent="Player"]
 position = Vector2(0, -675)
 
 [node name="PlatformSpawner" type="Node2D" parent="."]
-script = ExtResource("2_2f145")
-platform_scene = ExtResource("1_0rvub")
-max_platform_count = 100
 
 [node name="Platform" type="StaticBody2D" parent="PlatformSpawner" groups=["platform"]]
 position = Vector2(540, 1793)
 
 [node name="Sprite2D" type="Sprite2D" parent="PlatformSpawner/Platform"]
 position = Vector2(0, 54)
-texture = ExtResource("5_gq3h4")
+texture = ExtResource("5_a52te")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformSpawner/Platform"]
 position = Vector2(0, 57)
@@ -60,11 +62,32 @@ one_way_collision = true
 position = Vector2(0, 59)
 scale = Vector2(26.3, 7.1)
 
+[node name="Platform2" parent="PlatformSpawner" instance=ExtResource("4_j7kpx")]
+position = Vector2(823, 1465)
+
+[node name="Path2D" parent="PlatformSpawner/Platform2" index="3"]
+visible = false
+
+[node name="PathFollow2D" parent="PlatformSpawner/Platform2/Path2D" index="0"]
+position = Vector2(119, -38)
+
+[node name="Platform3" parent="PlatformSpawner" instance=ExtResource("4_j7kpx")]
+position = Vector2(314, 1293)
+
+[node name="Platform4" parent="PlatformSpawner" instance=ExtResource("4_j7kpx")]
+position = Vector2(642, 1027)
+
+[node name="Path2D" parent="PlatformSpawner/Platform4" index="3"]
+visible = false
+
+[node name="PathFollow2D" parent="PlatformSpawner/Platform4/Path2D" index="0"]
+position = Vector2(119, -38)
+
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
-script = ExtResource("3_doiey")
+script = ExtResource("6_4pr4e")
 
 [node name="PlatformDestroyer" type="Area2D" parent="Camera"]
 position = Vector2(540, 2040)
@@ -80,7 +103,7 @@ motion_mirroring = Vector2(0, 1920)
 
 [node name="Starfeild" type="Sprite2D" parent="Camera/ParallaxBackground/ParallaxLayer"]
 scale = Vector2(1.005, 1)
-texture = ExtResource("7_b3v0r")
+texture = ExtResource("7_cy8kx")
 offset = Vector2(540, 960)
 
 [node name="LosingGround" type="StaticBody2D" parent="."]
@@ -90,20 +113,20 @@ position = Vector2(540, 2500)
 self_modulate = Color(0.386915, 0.439319, 0.688473, 1)
 position = Vector2(0, 86)
 scale = Vector2(2.42188, 2.42188)
-texture = ExtResource("5_gq3h4")
+texture = ExtResource("5_a52te")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LosingGround"]
 position = Vector2(0, 98)
 shape = SubResource("RectangleShape2D_u38k2")
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_4c38d")
-volume_db = 15.0
+stream = ExtResource("8_hcrq3")
 
 [node name="SpringSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("9_t2077")
+stream = ExtResource("9_54404")
 
 [node name="HUD" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ScoreLabel" type="Label" parent="HUD"]
 anchors_preset = 10
@@ -115,13 +138,19 @@ label_settings = SubResource("LabelSettings_d0mal")
 horizontal_alignment = 1
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="MainMenu" parent="MainMenu" instance=ExtResource("7_ufq5w")]
+[node name="MainMenu" parent="MainMenu" instance=ExtResource("11_eit8c")]
 
-[node name="AboutDev" parent="MainMenu" instance=ExtResource("8_1ebt3")]
+[node name="AboutDev" parent="MainMenu" instance=ExtResource("12_dyu01")]
 visible = false
 
 [node name="LoseMenu" type="CanvasLayer" parent="."]
-
-[node name="LosePanel" parent="LoseMenu" instance=ExtResource("8_p2oiy")]
 visible = false
+
+[node name="LosePanel" parent="LoseMenu" instance=ExtResource("13_kqj0x")]
+visible = false
+
+[editable path="Player"]
+[editable path="PlatformSpawner/Platform2"]
+[editable path="PlatformSpawner/Platform4"]

@@ -2,7 +2,7 @@ extends Node2D
 
 @export var platform_scene: PackedScene
 @export var max_platform_count = 500
-@export var platform_spacing = 300.0
+@export var platform_spacing = 300.0 * 0.75
 
 @onready var camera: Camera2D = $"../Camera"
 @onready var game_manager: GameManager = $".."
@@ -23,13 +23,12 @@ func spawn_platform():
 	platform.global_position = $"../Player/PlatformsMarker".global_position
 	platform.position.x = randf_range(0, screen_width)
 	
-	# i tried setting spring_path.progress_ration but it didn't work, may godot bug?
-	spring_path.progress = randf_range(0, 306)
-	if randf() > 0.9:
-		spring_path.get_child(0).body_entered.connect(spring_body_entered)
-	else:
+	# i tried setting spring_path.progress_ration but it didn't work, may be godot bug?
+	spring_path.progress = randf_range(0, 237)
+	if randf() < 0.9:
 		spring_path.get_parent().queue_free()
 	
+	# I used call_deferred because without it compiler throws an error
 	call_deferred("add_child", platform)
 	
 func goto_next_position():
@@ -45,8 +44,3 @@ func destroy_platform(body):
 		body.queue_free()
 		game_manager.add_score()
 
-func spring_body_entered(body):
-	if not body.is_in_group("player"): return
-	if body.velocity.y < 0: return
-	
-	body.jump(body.JUMP_VELOCITY * 1.2)
